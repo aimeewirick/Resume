@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aimee Wirick — Web Applications</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --crust:#3A2517; --flour:#F6ECD7; --paper:#FBF5E7; --butter:#EBA12E; --jam:#B5343A;
+    --herb:#6E9A4F; --kraft:#D8C09A; --char:#5A4636; --ink-soft:#7A6450;
+    --shadow:0 18px 44px rgba(58,37,23,.16);
+    --r:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"IBM Plex Sans",system-ui,sans-serif;color:var(--crust);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+    background:
+      radial-gradient(740px 480px at 8% -4%, rgba(235,161,46,.18), transparent 60%),
+      radial-gradient(680px 520px at 100% 8%, rgba(181,52,58,.10), transparent 56%),
+      radial-gradient(700px 560px at 50% 118%, rgba(110,154,79,.16), transparent 58%),
+      var(--flour);
+  }
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+    background-image:repeating-linear-gradient(31deg,rgba(120,90,50,.04) 0 1px,transparent 1px 5px),repeating-linear-gradient(-29deg,rgba(120,90,50,.03) 0 1px,transparent 1px 6px)}
+  .wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:0 24px}
+  h1,h2,h3,h4{font-family:"Fraunces",Georgia,serif;font-weight:600;letter-spacing:-.01em;font-variation-settings:"opsz" 96,"SOFT" 60}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--ink-soft)}
+
+  /* nav */
+  .topbar{display:flex;justify-content:space-between;align-items:center;padding:24px 0;gap:16px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:11px;font-family:"Fraunces";font-weight:900;font-size:19px;text-decoration:none;color:var(--crust)}
+  .brand .dot{width:30px;height:30px;border-radius:9px 9px 11px 11px;background:radial-gradient(circle at 60% 38%,var(--butter),#c87f1e);box-shadow:inset 0 2px 5px rgba(255,255,255,.5),0 7px 15px rgba(200,127,30,.4);flex:none}
+  .rooms{display:flex;gap:4px;flex-wrap:wrap}
+  .rooms a{font-size:13px;font-weight:600;text-decoration:none;color:var(--ink-soft);padding:8px 14px;border-radius:999px;transition:.2s}
+  .rooms a:hover,.rooms a:focus-visible{color:var(--crust);background:var(--paper);box-shadow:0 5px 13px rgba(58,37,23,.12)}
+  .rooms a[aria-current="page"]{color:var(--flour);background:var(--jam);box-shadow:0 7px 15px rgba(181,52,58,.34)}
+  .rooms .soon{font-size:13px;font-weight:600;color:var(--ink-soft);opacity:.42;padding:8px 14px;cursor:default}
+
+  /* hero */
+  .hero{padding:46px 0 18px;display:grid;grid-template-columns:1fr;gap:8px;text-align:center;justify-items:center}
+  .hero h1{font-weight:900;font-size:clamp(40px,7.4vw,78px);line-height:.98;max-width:15ch;font-variation-settings:"opsz" 144,"SOFT" 40}
+  .hero h1 em{font-style:italic;color:var(--jam)}
+  .hero .lead{font-size:clamp(16px,2.2vw,19px);max-width:52ch;color:var(--ink-soft);margin-top:14px}
+  .hero .lead strong{color:var(--crust);font-weight:600}
+
+  /* breadle */
+  .game{margin:18px auto 8px;max-width:520px;background:var(--paper);border-radius:24px;padding:26px 26px 30px;box-shadow:var(--shadow);border:1px solid rgba(120,90,50,.16);position:relative}
+  .game::before{content:"";position:absolute;inset:0 0 auto 0;height:7px;border-radius:24px 24px 0 0;background:linear-gradient(90deg,var(--butter),var(--jam),var(--herb))}
+  .game .gh{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:4px}
+  .game h2{font-size:30px}
+  .game .gh small{font-family:"IBM Plex Sans";font-weight:600;font-size:12px;color:var(--ink-soft)}
+  .game .sub{font-size:13.5px;color:var(--ink-soft);margin-bottom:16px}
+  .board{display:grid;grid-template-rows:repeat(6,1fr);gap:7px;width:min(330px,82vw);margin:0 auto 14px}
+  .brow{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+  .tile{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-family:"IBM Plex Sans";font-weight:700;
+    font-size:clamp(22px,6vw,30px);text-transform:uppercase;border-radius:11px;background:var(--flour);
+    border:2px solid var(--kraft);color:var(--crust);transition:transform .15s,background .3s,border-color .3s,color .3s}
+  .tile.filled{border-color:#b79a6a;transform:scale(1.04)}
+  .tile.correct{background:var(--herb);border-color:var(--herb);color:#fff}
+  .tile.present{background:var(--butter);border-color:var(--butter);color:#fff}
+  .tile.absent{background:var(--char);border-color:var(--char);color:#e8ddcf}
+  @media(prefers-reduced-motion:no-preference){.tile.reveal{animation:flip .5s ease}}
+  @keyframes flip{0%{transform:rotateX(0)}50%{transform:rotateX(90deg)}100%{transform:rotateX(0)}}
+
+  .msg{min-height:24px;text-align:center;font-weight:600;font-size:14px;margin:2px 0 12px;color:var(--jam)}
+  .msg.win{color:var(--herb)}
+
+  .keys{display:flex;flex-direction:column;gap:6px;align-items:center}
+  .krow{display:flex;gap:5px;justify-content:center;width:100%}
+  .key{font-family:"IBM Plex Sans";font-weight:600;font-size:13px;text-transform:uppercase;border:none;cursor:pointer;
+    background:var(--kraft);color:var(--crust);border-radius:8px;padding:13px 0;flex:1;min-width:0;transition:.15s;box-shadow:0 2px 0 rgba(90,70,40,.25)}
+  .key:hover{filter:brightness(1.05)}
+  .key:active{transform:translateY(1px);box-shadow:none}
+  .key.wide{flex:1.6;font-size:11px;letter-spacing:.04em}
+  .key.correct{background:var(--herb);color:#fff}
+  .key.present{background:var(--butter);color:#fff}
+  .key.absent{background:#bcae97;color:#7c6b52}
+  .replay{display:block;margin:16px auto 0;font-family:"IBM Plex Sans";font-weight:600;font-size:13px;color:var(--jam);background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;transition:.2s}
+  .replay:hover{border-color:var(--jam)}
+
+  /* projects */
+  .sec{padding:54px 0 10px}
+  .sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:22px;flex-wrap:wrap}
+  .sec-head h2{font-size:clamp(26px,4vw,36px)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .proj{background:var(--paper);border-radius:var(--r);padding:26px;box-shadow:var(--shadow);border:1px solid rgba(120,90,50,.14);position:relative;overflow:hidden;display:flex;flex-direction:column}
+  .proj::before{content:"";position:absolute;inset:0 0 auto 0;height:5px;background:var(--accent,var(--butter))}
+  .proj .tag{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+  .proj h3{font-size:25px;margin:8px 0 6px}
+  .proj p{font-size:14.5px;color:var(--ink-soft);flex:1}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0 16px}
+  .chip{font-size:11.5px;font-weight:600;padding:6px 11px;border-radius:999px;background:var(--flour);color:var(--ink-soft);border:1px solid var(--kraft)}
+  .plinks{display:flex;gap:10px}
+  .plinks a{flex:1;text-align:center;text-decoration:none;font-weight:700;font-size:13.5px;padding:11px;border-radius:12px;color:#fff;background:var(--jam);box-shadow:0 7px 15px rgba(181,52,58,.28)}
+  .plinks a.ghost{background:var(--paper);color:var(--crust);border:1.5px solid var(--kraft);box-shadow:none}
+  .workshop{margin-top:22px;font-size:14px;color:var(--ink-soft);background:var(--paper);border:1px dashed var(--kraft);border-radius:var(--r);padding:18px 22px}
+  .workshop b{color:var(--crust);font-family:"Fraunces";font-weight:600}
+
+  footer{padding:56px 0 64px;text-align:center}
+  .foot{display:flex;flex-direction:column;align-items:center;gap:14px}
+  .foot h3{font-size:clamp(22px,3.4vw,30px)}
+  .flinks{display:flex;gap:22px}
+  .flinks a{color:var(--jam);text-decoration:none;font-weight:700;border-bottom:2px solid transparent;transition:.2s}
+  .flinks a:hover{border-color:var(--jam)}
+  .credit{font-size:12px;color:var(--ink-soft);opacity:.8}
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.8,.2,1),transform .7s cubic-bezier(.2,.8,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  a:focus-visible,button:focus-visible{outline:3px solid var(--butter);outline-offset:2px}
+  @media(max-width:720px){.grid{grid-template-columns:1fr}.rooms{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="topbar">
+    <a class="brand" href="profile"><span class="dot" aria-hidden="true"></span> Aimee Wirick</a>
+    <div class="rooms">
+      <a href="ui.html">UI</a><a href="web.html" aria-current="page">Web Apps</a><span class="soon">Mobile</span><span class="soon">3D</span><span class="soon">Data</span>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <span class="eyebrow">Web Applications · the builder</span>
+    <h1>Apps you can <em>actually</em> use. Starting now.</h1>
+    <p class="lead">Everything in this room is full-stack, deployed, and in real use. So instead of telling you it works — <strong>here's one to play with.</strong></p>
+  </header>
+
+  <section class="game" aria-label="Breadle, a daily baking word game">
+    <div class="gh"><h2>Breadle</h2><small id="mode">today's loaf</small></div>
+    <p class="sub">Guess the five-letter baking item in six tries. Green is good bake, place and letter, butter is rising full of possibilities, brown is raw, let's bake it.</p>
+    <div class="board" id="board"></div>
+    <p class="msg" id="msg" role="status" aria-live="polite"></p>
+    <div class="keys" id="keys"></div>
+    <button class="replay" id="replay" hidden>Bake another loaf →</button>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head reveal"><h2>Examples of My Apps</h2><span class="eyebrow">shipped &amp; in use</span></div>
+    <div class="grid">
+      <article class="proj reveal" style="--accent:var(--butter)">
+        <span class="tag">Full-stack · solo build</span>
+        <h3>HomeBakes</h3>
+        <p>A recipe &amp; meal-planning app with a 1950s kitchen soul — calorie tracking on USDA data, allergen warnings, a meal planner, and shopping lists you share by link. Built because preserving family recipes is its own kind of love.</p>
+        <div class="chips"><span class="chip">Flask</span><span class="chip">Firestore</span><span class="chip">Railway</span><span class="chip">USDA API</span></div>
+        <div class="plinks"><a href="https://home-bakes-production.up.railway.app/login.html">Visit live site</a><a class="ghost" href = "https://github.com/aimeewirick/home-bakes">Code</a></div>
+      </article>
+      <article class="proj reveal" style="--accent:var(--herb)">
+        <span class="tag">Capstone · full-stack team</span>
+        <h3>Mentor Match</h3>
+        <p>A deployed platform that pairs students with mentors on a weighted matching algorithm. Shipped to a hand-off-ready state, validated with a real five-user usability study, and live on its own domain.</p>
+        <div class="chips"><span class="chip">React</span><span class="chip">TypeScript</span><span class="chip">Firebase</span><span class="chip">Cloud Functions</span></div>
+        <div class="plinks"><a href="https://eecs-cop-mentor-matching-site.web.app/">Visit live site</a><a class="ghost" href="https://github.com/EECS-CoP-Mentor-Matching/Mentor-Matching-Site">Code</a></div>
+      </article>
+    </div>
+    <div class="workshop reveal"><b>Proofing in the workshop —</b> a database-backed shopping-list app on the Kroger developer API. I mapped the cart / products / locations architecture and settled on a design that caches product identity but fetches availability live. Set aside, not forgotten.</div>
+  </section>
+
+  <footer>
+    <div class="foot reveal">
+      <h3>Let's build something that lasts.</h3>
+      <div class="flinks">
+        <a href="https://www.linkedin.com/in/aimee-wirick-170765122/">LinkedIn</a>
+        <a href="https://github.com/aimeewirick">GitHub</a>
+        <a href="mailto:wirickaimee@gmail.com">Email</a>
+      </div>
+      <p class="credit">Designed &amp; built by Aimee Wirick with Claude.ai · © 2026 Aimee Wirick</p>
+    </div>
+  </footer>
+</div>
+
+<script>
+  // ---- Breadle ----
+  var WORDS=["FLOUR","YEAST","KNEAD","CRUMB","PROOF","DOUGH","WHISK","CRUST","SUGAR","HONEY","SCONE","WHEAT","GRAIN","ICING","GLAZE","BRAID","MIXER","SIEVE","BAKER","BUNDT","CREAM","SPICE","FUDGE","TORTE","WAFER","DONUT","BATCH","BLEND","ROLLS","SYRUP","LEMON","APPLE","PEACH","MOCHA","BERRY","DATES"];
+  var ROWS=6, COLS=5;
+  var target, row, guess, over, daily;
+
+  var boardEl=document.getElementById('board'), msgEl=document.getElementById('msg'),
+      keysEl=document.getElementById('keys'), replayEl=document.getElementById('replay'), modeEl=document.getElementById('mode');
+
+  function dailyWord(){ var d=Math.floor(Date.now()/864e5); return WORDS[d%WORDS.length]; }
+
+  function buildBoard(){
+    boardEl.innerHTML='';
+    for(var r=0;r<ROWS;r++){
+      var rw=document.createElement('div'); rw.className='brow';
+      for(var c=0;c<COLS;c++){ var t=document.createElement('div'); t.className='tile'; t.id='t'+r+'-'+c; rw.appendChild(t); }
+      boardEl.appendChild(rw);
+    }
+  }
+  var KEYS=[["Q","W","E","R","T","Y","U","I","O","P"],["A","S","D","F","G","H","J","K","L"],["ENT","Z","X","C","V","B","N","M","DEL"]];
+  function buildKeys(){
+    keysEl.innerHTML='';
+    KEYS.forEach(function(rowk){
+      var kr=document.createElement('div'); kr.className='krow';
+      rowk.forEach(function(k){
+        var b=document.createElement('button'); b.className='key'+(k.length>1?' wide':''); b.textContent=(k==='DEL'?'⌫':k); b.dataset.k=k; b.id='k'+k;
+        b.addEventListener('click',function(){press(k);});
+        kr.appendChild(b);
+      });
+      keysEl.appendChild(kr);
+    });
+  }
+  function start(useDaily){
+    target = useDaily ? dailyWord() : WORDS[Math.floor(Math.random()*WORDS.length)];
+    row=0; guess=''; over=false; daily=useDaily;
+    modeEl.textContent = useDaily ? "today's loaf" : "fresh loaf";
+    msgEl.textContent=''; msgEl.className='msg'; replayEl.hidden=true;
+    buildBoard(); buildKeys();
+  }
+  function setMsg(t,win){ msgEl.textContent=t; msgEl.className='msg'+(win?' win':''); }
+
+  function press(k){
+    if(over){ return; }
+    if(k==='ENT'){ submit(); return; }
+    if(k==='DEL'){ guess=guess.slice(0,-1); render(); return; }
+    if(/^[A-Z]$/.test(k) && guess.length<COLS){ guess+=k; render(); }
+  }
+  function render(){
+    for(var c=0;c<COLS;c++){
+      var t=document.getElementById('t'+row+'-'+c);
+      if(!t) continue;
+      t.textContent=guess[c]||'';
+      t.classList.toggle('filled',!!guess[c]);
+    }
+  }
+  function submit(){
+    if(guess.length<COLS){ setMsg("Needs five letters."); return; }
+    var tgt=target.split(''), res=new Array(COLS).fill('absent'), counts={};
+    tgt.forEach(function(ch){counts[ch]=(counts[ch]||0)+1;});
+    for(var i=0;i<COLS;i++){ if(guess[i]===tgt[i]){ res[i]='correct'; counts[guess[i]]--; } }
+    for(var i=0;i<COLS;i++){ if(res[i]!=='correct' && counts[guess[i]]>0){ res[i]='present'; counts[guess[i]]--; } }
+    for(var c=0;c<COLS;c++){
+      (function(c){
+        var t=document.getElementById('t'+row+'-'+c);
+        setTimeout(function(){
+          t.classList.add('reveal',res[c]); t.classList.remove('filled');
+          var kb=document.getElementById('k'+guess[c]);
+          if(kb){ var rank={absent:0,present:1,correct:2};
+            var cur=kb.classList.contains('correct')?2:kb.classList.contains('present')?1:kb.classList.contains('absent')?0:-1;
+            if(rank[res[c]]>cur){ kb.classList.remove('absent','present','correct'); kb.classList.add(res[c]); } }
+        }, c*120);
+      })(c);
+    }
+    var win = guess===target;
+    var solved=guess;
+    setTimeout(function(){
+      if(win){ over=true; setMsg(["Golden brown!","Perfectly baked.","Nailed the bake!"][row>2?2:row], true); replayEl.hidden=false; }
+      else if(row>=ROWS-1){ over=true; setMsg("Out of the oven — it was "+target+"."); replayEl.hidden=false; }
+      else { row++; guess=''; }
+    }, COLS*120+60);
+  }
+
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Enter') press('ENT');
+    else if(e.key==='Backspace') press('DEL');
+    else { var u=e.key.toUpperCase(); if(/^[A-Z]$/.test(u)) press(u); }
+  });
+  replayEl.addEventListener('click',function(){ start(false); });
+  start(true);
+
+  // ---- reveals ----
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.14});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+</script>
+</body>
+</html>

@@ -366,6 +366,15 @@
   }
 </style>
 </head>
+<script>
+  document.getElementById('cardForm').addEventListener('submit', function () {
+    fetch('https://formspree.io/f/maqzlqvp', {
+      method: 'POST',
+      body: new FormData(this),
+      headers: { 'Accept': 'application/json' }
+    });
+  });
+</script>
 <body>
 
 <svg xmlns="http://www.w3.org/2000/svg" style="position: absolute; width: 0; height: 0;" aria-hidden="true">
@@ -478,7 +487,7 @@
         
         <form id="cardForm" autocomplete="on">
           <div class="field"><label for="nm">Name</label><input id="nm" name="nm" required></div>
-          <div class="field"><label for="em">Email</label><input id="em" name="em" type="email" required></div>
+          <div class="field"><label for="em">Email</label><input id="em" name="email" type="email" required></div>
           <div class="field"><label for="nt">A quick note (optional)</label><textarea id="nt" name="nt" rows="2" placeholder="What caught your eye?"></textarea></div>
           <button class="submit" id="submitBtn" type="submit">Drop it in Aimee's jar</button>
           <p class="privacy">🔒 Goes only to Aimee · adds one candy to the jar</p>

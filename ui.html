@@ -366,15 +366,7 @@
   }
 </style>
 </head>
-<script>
-  document.getElementById('cardForm').addEventListener('submit', function () {
-    fetch('https://formspree.io/f/maqzlqvp', {
-      method: 'POST',
-      body: new FormData(this),
-      headers: { 'Accept': 'application/json' }
-    });
-  });
-</script>
+
 <body>
 
 <svg xmlns="http://www.w3.org/2000/svg" style="position: absolute; width: 0; height: 0;" aria-hidden="true">
@@ -690,6 +682,15 @@
       form.style.display='none'; thanks.classList.add('on');
     });
   })();
+</script>
+<script>
+  document.getElementById('cardForm').addEventListener('submit', function () {
+    fetch('https://formspree.io/f/maqzlqvp', {
+      method: 'POST',
+      body: new FormData(this),
+      headers: { 'Accept': 'application/json' }
+    });
+  });
 </script>
 </body>
 </html>

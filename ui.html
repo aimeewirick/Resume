@@ -563,7 +563,21 @@
     var submitBtn=document.getElementById('submitBtn');
     var bloomLayer=document.getElementById('blooms');
     var START=27;
-    function bump(){ countEl.textContent=parseInt(countEl.textContent,10)+1; }
+    function bump(){
+      // Optimistic local update immediately for a snappy feel...
+      countEl.textContent=parseInt(countEl.textContent,10)+1;
+      // ...then reconcile with the real persisted count from the server.
+      fetch('/api/candy-count', { method: 'POST' })
+        .then(function(r){ return r.json(); })
+        .then(function(data){ if (typeof data.count === 'number') countEl.textContent = data.count; })
+        .catch(function(err){ console.error('candy-count increment failed:', err); });
+    }
+
+    // Load the real persisted count on page load (overrides the hardcoded 27 above)
+    fetch('/api/candy-count')
+      .then(function(r){ return r.json(); })
+      .then(function(data){ if (typeof data.count === 'number') countEl.textContent = data.count; })
+      .catch(function(err){ console.error('candy-count fetch failed:', err); });
 
     var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
